@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import instance from '../api/instance';
+import { useNavigate } from 'react-router-dom';
+import { useAuth, AuthContextType } from '../auth/AuthContext';
+
 
 const Login = () => {
+
 
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
+    const navigate = useNavigate();
+    const { login } : AuthContextType = useAuth();
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
@@ -21,7 +27,9 @@ const Login = () => {
         try {
             const res = await instance.post('/users/login', formData);
             console.log(res);
+            login(res.data.token, res.data.user);
 
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
