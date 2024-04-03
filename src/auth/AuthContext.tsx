@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import instance from "../api/instance";
 
 export interface AuthContextType {
-    login: (token: string, user: any) => void;
+    getUserByToken: () =>void;
     logout: () => void;
     user: any; 
 }
@@ -13,31 +14,27 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: {children:any}) => {
 
     const [user, setUser] = useState(null);
-    
+
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+        getUserByToken();
     }, []);
 
-    const login = (token:any, user:any) => {
+    const getUserByToken = async () => {
 
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        setUser(user);
+        const res = await instance.get('/auth/token');
+
+        setUser(res.data.user);
     };
 
     const logout = () => {
-        localStorage.removeItem('user');
         localStorage.removeItem('token');
         setUser(null);
     };
 
     const contextValue: AuthContextType = { 
-        login,
+        getUserByToken,
         logout,
-        user
+        user,
     };
 
     return(

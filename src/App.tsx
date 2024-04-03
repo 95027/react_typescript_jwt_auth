@@ -1,15 +1,11 @@
-import Routings from "./routings/Routings"
-
+import Routings from "./routings/Routings";
 
 function App() {
-
-
   return (
     <>
-      {/* <Register/> */}
-      <Routings/>
+      <Routings />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

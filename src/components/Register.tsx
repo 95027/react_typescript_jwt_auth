@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import instance from '../api/instance';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
@@ -9,6 +10,7 @@ const Register = () => {
         password: '',
     });
     const [avatar, setAvatar] = useState<any>();
+    const navigate = useNavigate();
 
     const handleChange = (e : any) => {
         const { name, value } = e.target;
@@ -32,8 +34,9 @@ const Register = () => {
         formData.append('password', data.password);
         formData.append('avatar', avatar);
         try {
-            const res= await instance.post('/users/register', formData);
+            const res= await instance.post('/auth/register', formData);
             console.log(res);
+            navigate('/login');
             setData(() => ({
                 name: '',
                 email: '',
