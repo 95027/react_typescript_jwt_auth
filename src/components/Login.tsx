@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import instance from '../api/instance';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
 
 
@@ -62,6 +62,7 @@ const Login = () => {
                         required 
                     />
                 </div>
+                <button ><Link to={'/forgot-password'}>Forgot password</Link></button><br/>
                 <button type="submit">Login</button>
             </form>
         </div>

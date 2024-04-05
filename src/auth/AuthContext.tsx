@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: {children:any}) => {
 
     const getUserByToken = async () => {
 
-        const res = await instance.get('/auth/token');
+        const res = await instance.get('/auth/getUserByToken');
 
         setUser(res.data.user);
     };
